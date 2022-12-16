@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <style>
+      html, body {
+        min-height: 100%;
+      }
+      body, div, form, input, select, p {
+        padding: 0;
+        margin: 0;
+        outline: none;
+        font-family: Roboto, Arial, sans-serif;
+        font-size: 14px;
+        color: #666;
+      }
+
+
+      h1 {
+        margin: 0;
+        font-weight: 400;
+      }
+      h3 {
+        margin: 12px 0;
+        color: #8ebf42;
+      }
+      .main-block {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+      }
+      form {
+        width: 100%;
+        background-color: #fff;
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 30px 20px;
+        box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+      }
+      fieldsets {
+        border: none;
+        border-top: 1px solid #8ebf42;
+      }
+
+      .call-info, .call-check {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .call-info >div, .call-check >div >div {
+        display: flex;
+        align-items: left;
+        margin-bottom: 10px;
+      }
+
+      .call-info >div, .call-check >div, input, select, label {
+        width: 100%;
+      }
+      label {
+        padding: 0 5px;
+        text-align: left;
+        vertical-align: middle;
+      }
+      .label_ext {
+        padding: 0 5px;
+        font-family: Roboto, Arial, sans-serif;
+        font-size: 11px;
+
+      input {
+        padding: 5px;
+        vertical-align: middle;
+      }
+      select {
+        padding: 5px;
+        vertical-align: bottom;
+      }
+
+      .checkup {
+        width: calc(100% + 26px);
+        padding: 5px 0;
+      }
+
+      .checkup input {
+        width: auto;
+      }
+      .checkup label {
+        padding: 0 5px 0 0;
+      }
+
+      @media (min-width: 568px) {
+        .call-info >div, .call-check >div {
+        width: 50%;
+        }
+        label {
+          width: 40%;
+         }
+        input {
+          width: 60%;
+        }
+        select {
+          width: 60%;
+        }
+        select, .checkup {
+          width: calc(60% + 16px);
+         }
+      }
+
+
+      button {
+        width: 100%;
+        padding: 10px 0;
+        margin: 10px auto;
+        border-radius: 5px;
+        border: none;
+        background: #8ebf42;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+      }
+      button:hover {
+        background: #82b534;
+      }
+
+  </style>
+
+
+<div class="form">
+    <form method="POST">
+      {% csrf_token %}
+      <h1>Crear nuevo cheque de llamada</h1>
+      <fieldset>
+        <legend>
+        <h3>Información de llamada</h3>
+        </legend>
+        <div class="call-info">
+          <div><label>Operador</label>  {{ form.operator }} </div>
+          <div><label>Equipo</label>  {{ form.op_team }} </div>
+          <div><label>Especialista en control de calidad</label> {{ form.qc_manager }} </div>
+          <div><label>Fecha de llamada</label> {{ form.call_date }} </div>
+          <div><label>Fecha de verificacion</label> {{ form.check_up_date }} </div>
+          <div><label>Tipo de llamada</label> {{ form.call_type }} </div>
+          <div><label>Proyecto</label> {{ form.project }} </div>
+          <div><label>Duración de la llamada en segundos</label> {{ form.call_duration }} </div>
+          <div><label>Número de teléfono</label> {{ form.phone_number }} </div>
+          <div><label>El nombre del archivo de la llamada</label> {{ form.record_name }} </div>
+        </div>
+        <span> {{ error }}</span>
+        </fieldset>
+        <fieldset>
+        <legend>
+        <h3>Formulario de validación</h3>
+        </legend>
+        <div class="call-check">
+          <div>
+            <div><label>Saludo.</label><br>
+              <label class="label_ext">"Buen día/tarde", Ejecutivo indica su nombre -1er nombre,1er apellido-, empresa de la que llama. Si=1, No=0</label>
+            <select {{ form.intro }}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Presentación</label>
+              <label class="label_ext">Confirmar contacto con deudor con un "SÍ" claro, Posible recapitulación de saludo, Indicar producto por el que se llama. Si=1, No=0</label>
+            <select {{ form.presentation }}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Motivo de la llamada</label>
+              <label class="label_ext">Indicar tiempo de atraso, Indicar monto de deuda. Si=1, No=0</label>
+            <select {{ form.purpose }}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Información de la deuda proporcionada correctamente</label>
+              <label class="label_ext">Haber brindado la información correcta de la deuda, no haber falseado información de ningun dipo -montos,contacto, etc. Si=1, No=0</label>
+            <select {{ form.info_to_debtor }}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Ofrecer opciones de pago correctamente</label>
+              <label class="label_ext">Descuentos, convenios, formas de pago, etc. Si=1, No=0</label>
+            <select {{ form.payment_options}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Manejo de objeciones / Firmeza en la gestión</label>
+              <label class="label_ext">Sí se presentan >3, manejar mínimo 3. Si=1, No=0</label>
+            <select {{ form.objections_handling}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Recapitulación de la gestión realizada</label>
+              <label class="label_ext">Confirmar la información del acuerdo logrado, Proporcionar información de contacto MBA/cliente. Si=1, No=0</label>
+            <select {{ form.commitment_closing}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Despedida</label>
+              <label class="label_ext">Indicar nuevamente nombre del ejecutivo, de dónde se llama y nombre del producto que representamos. Si=1, No=0</label>
+            <select {{ form.farewell}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Resultado de la llamada / Código de acción correcto en ANT</label>
+              <label class="label_ext">Validar que se haya calificado el contacto obtenido y hecho la tipificación, de forma correcta. Si=1, No=0</label>
+              <select {{ form.ant_event_result}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Información insertada correctamente en el ANT</label>
+              <label class="label_ext">Validar que el Ejecutivo haya puesto correctamente en ANT: teclas de acceso rápido -hotkeys-, comentarios, etc. Si=1, No=0</label>
+            <select {{ form.ant_info}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Seguir modelo de llamada</label>
+              <label class="label_ext">Si=0, No=-1</label>
+            <select {{ form.call_model_following}}>
+            <option value=""></option>
+            <option value="0">Yes</option>
+            <option value="-1">No</option>
+            </select>
+            </div>
+            <div><label>Tono de voz adecuado</label>
+              <label class="label_ext">Si=0, No=-1</label>
+            <select {{ form.voice_tone}}>
+            <option value=""></option>
+            <option value="0">Yes</option>
+            <option value="-1">No</option>
+            </select>
+            </div>
+            <div><label>Uso de: "Palabras y Frases Prohibidas"</label>
+              <label class="label_ext">Si=-1, No=0</label>
+            <select {{ form.prohibited_phrases}}>
+            <option value=""></option>
+            <option value="-1">Yes</option>
+            <option value="0">No</option>
+            </select>
+            </div>
+            <div><label>Comments</label> {{ form.comments }} </div>
+          </div>
+        </div>
+        </fieldset>
+        {% if request.user.is_authenticated %}
+          <button type="submit" class="button">Submit</button>
+        {% endif%}
+    </form>
+</div>
+
+{% endblock %}
+

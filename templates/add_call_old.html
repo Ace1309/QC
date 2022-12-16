@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+      html, body {
+        min-height: 100%;
+      }
+      body, div, form, input, select, p {
+        padding: 0;
+        margin: 0;
+        outline: none;
+        font-family: Roboto, Arial, sans-serif;
+        font-size: 14px;
+        color: #666;
+      }
+
+
+      h1 {
+        margin: 0;
+        font-weight: 400;
+      }
+      h3 {
+        margin: 12px 0;
+        color: #8ebf42;
+      }
+      .main-block {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+      }
+      form {
+        width: 100%;
+        background-color: #fff;
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 30px 20px;
+        box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+      }
+      fieldsets {
+        border: none;
+        border-top: 1px solid #8ebf42;
+      }
+
+      .call-info, .call-check {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .call-info >div, .call-check >div >div {
+        display: flex;
+        align-items: left;
+        margin-bottom: 10px;
+      }
+      .call-info >div, .call-check >div, input, select, label {
+        width: 100%;
+      }
+      label {
+        padding: 0 5px;
+        text-align: left;
+        vertical-align: middle;
+      }
+      input {
+        padding: 5px;
+        vertical-align: middle;
+      }
+      select {
+        padding: 5px;
+        vertical-align: bottom;
+      }
+
+      .checkup {
+        width: calc(100% + 26px);
+        padding: 5px 0;
+      }
+
+      .checkup input {
+        width: auto;
+      }
+      .checkup label {
+        padding: 0 5px 0 0;
+      }
+
+      @media (min-width: 568px) {
+        .call-info >div, .call-check >div {
+          width: 50%;
+        }
+        label {
+          width: 40%;
+         }
+        input {
+          width: 60%;
+        }
+        select {
+          width: 60%;
+        }
+        select, .checkup {
+          width: calc(60% + 16px);
+         }
+      }
+
+
+      button {
+        width: 100%;
+        padding: 10px 0;
+        margin: 10px auto;
+        border-radius: 5px;
+        border: none;
+        background: #8ebf42;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+      }
+      button:hover {
+        background: #82b534;
+      }
+
+  </style>
+</head>
+<body>
+
+<div class="form">
+    <form method="POST">
+      {% csrf_token %}
+      <h1>Create New Call Check</h1>
+      <fieldset>
+        <legend>
+        <h3>Call Info</h3>
+        </legend>
+        <div class="call-info">
+          <div><label>Operator</label> {{ form.operator }} </div>
+          <div><label>QC Manager</label> {{ form.qc_manager }} </div>
+          <div><label>Call Date</label> {{ form.call_date }} </div>
+          <div><label>Check Up Date</label> {{ form.check_up_date }} </div>
+          <div><label>Call Type</label> {{ form.call_type }} </div>
+          <div><label>Project</label> {{ form.project }} </div>
+          <div><label>Call Duration</label> {{ form.call_duration }} </div>
+          <div><label>Phone Number</label> {{ form.phone_number }} </div>
+          <div><label>Record Name</label> {{ form.record_name }} </div>
+        </div>
+        <span> {{ error }}</span>
+        </fieldset>
+        <fieldset>
+        <legend>
+        <h3>Check Up Form</h3>
+        </legend>
+        <div class="call-check">
+          <div>
+            <div><label>Introduction</label>
+            <select {{ form.intro }}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Presentation</label>
+            <select {{ form.presentation }}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Purpose</label>
+            <select {{ form.purpose }}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Info to Debtor</label>
+            <select {{ form.info_to_debtor }}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Payment Options</label>
+            <select {{ form.payment_options}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Objections Handling</label>
+            <select {{ form.objections_handling}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Commitment Closing</label>
+            <select {{ form.commitment_closing}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Farewell</label>
+            <select {{ form.farewell}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Ant event result</label>
+              <select {{ form.ant_event_result}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Ant Info</label>
+            <select {{ form.ant_info}}>
+            <option value=""></option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Call Model Following</label>
+            <select {{ form.call_model_following}}>
+            <option value=""></option>
+            <option value="-1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Voice Tone</label>
+            <select {{ form.voice_tone}}>
+            <option value=""></option>
+            <option value="0">Yes</option>
+            <option value="-1">No</option>
+            </select>
+          </div>
+            <div><label>Prohibited Phrases</label>
+            <select {{ form.prohibited_phrases}}>
+            <option value=""></option>
+            <option value="-1">Yes</option>
+            <option value="0">No</option>
+            </select>
+          </div>
+            <div><label>Comments</label> {{ form.comments }} </div>
+          </div>
+        </div>
+        <button type="submit" class="button">Submit</button>
+    </form>
+</div>
+</body>
